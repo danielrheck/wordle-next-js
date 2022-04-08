@@ -1,0 +1,95 @@
+.keyboard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    background-color: #837169;
+    width: 605px;
+    height: 200px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.665);
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.keyboard_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 6px;
+    align-items: center;
+    height: 40px;
+}
+
+.row_key {
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    background-color: #8e7e76;
+    font-size: 26px;
+    font-family: 'Maven Pro', sans-serif;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    width: 45px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.enter_clear {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.enter_key {
+    background-color: #8e7e76;
+    padding: 11px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 15%;
+    width: 55px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    left: 15px;
+}
+
+.icons {
+    width: 26px;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+.clicked {
+    background-color: #b4ada1;
+}
+
+.wrong_letter {
+    background-color: rgb(75, 68, 80);
+    transition: background-color 0.5s;
+}
+
+.rightplace {
+    background-color: #3aa394;
+    transition: background-color 0.5s;
+}
+
+.wrongplace {
+    background-color: #d3ad69;
+    transition: background-color 0.5s;
+}
