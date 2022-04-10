@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5px;
+    gap: 20px;
     background-color: #837169;
     width: 605px;
     height: 200px;
@@ -53,30 +53,20 @@
 
 .enter_key {
     background-color: #8e7e76;
-    padding: 11px;
-    padding-right: 15px;
-    padding-left: 15px;
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 15%;
-    width: 55px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    height: 48px;
+    width: 48px;
     display: flex;
     justify-content: center;
     text-align: center;
     cursor: pointer;
-    position: relative;
-    left: 15px;
-}
-
-.icons {
-    width: 26px;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
 }
 
 .clicked {
-    background-color: #b4ada1;
+    background-color: #9c927b;
 }
 
 .wrong_letter {
@@ -92,4 +82,10 @@
 .wrongplace {
     background-color: #d3ad69;
     transition: background-color 0.5s;
+}
+
+.logState {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }

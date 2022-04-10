@@ -1,10 +1,10 @@
 import styles from '../styles/Home.module.css';
-import { Keyboard } from '../components/Keyboard/Keyboard';
+import Game from '../components/Game/Game.js';
 
 export default function Home() {
     return (
-        <>
-            <Keyboard></Keyboard>
-        </>
+        <div className={styles.body}>
+            <Game></Game>
+        </div>
     );
 }

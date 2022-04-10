@@ -1,0 +1,62 @@
+.activeRowKeys {
+    cursor: pointer;
+}
+
+.inputsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.inputRow {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.inputItem {
+    width: 58px;
+    height: 58px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s;
+}
+
+.letter {
+    font-size: 40px;
+    font-family: 'Ubuntu', sans-serif;
+    color: white;
+}
+
+.basecolor {
+    background-color: #837169;
+}
+
+.clicked {
+    background-color: #625766;
+}
+
+.rightplace {
+    background-color: #3aa394;
+}
+
+.wrongplace {
+    background-color: #d3ad69;
+}
+
+.wrongletter {
+    background-color: rgb(75, 68, 80);
+}
+
+.activeinput {
+    background-color: #a78a7b;
+}
+
+.logState {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+}

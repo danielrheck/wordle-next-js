@@ -1,25 +1,65 @@
+import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import { keyboardState } from '../../recoil/atoms/keyboard/keyboard';
-import { makeKeyClicked } from './functions';
+import { keyboardState } from './recoil';
+import { makeKeyClicked, makeKeyNotClicked } from './recoilFunctions';
 import styles from './Keyboard.module.css';
 
-export function Keyboard(props) {
+export default function Keyboard() {
     const first_row = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
     const second_row = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
     const third_row = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
     const [keyboard, setKeyboard] = useRecoilState(keyboardState);
 
+    function getInputProps(key) {
+        if (keyboard) {
+            let classes = '';
+            let clicked = '';
+            let rightplace = '';
+            let wrongplace = '';
+            let wrongletter = '';
+            if (keyboard[key].clicked) {
+                clicked = styles.clicked;
+            }
+            if (keyboard[key].rightplace) {
+                rightplace = styles.rightplace;
+            }
+            if (keyboard[key].wrongplace) {
+                wrongplace = styles.wrongplace;
+            }
+            if (keyboard[key].wrongletter) {
+                wrongletter = styles.wrongletter;
+            }
+            classes =
+                clicked +
+                ' ' +
+                rightplace +
+                ' ' +
+                wrongplace +
+                ' ' +
+                wrongletter +
+                ' ' +
+                styles.row_key;
+            return classes;
+        }
+    }
+
     const logState = function () {
         console.log(keyboard);
     };
 
-    const click = function (e) {
+    const clickAnimation = function (e) {
         makeKeyClicked(e, setKeyboard, keyboard);
+        setTimeout(() => {
+            makeKeyNotClicked(e, setKeyboard, keyboard);
+        }, 50);
     };
 
     return (
         <>
+            <button className={styles.logState} onClick={() => logState()}>
+                log keyboard state
+            </button>
             <div className={styles.keyboard}>
                 <div className={styles.rows}>
                     <div className={styles.keyboard_row}>
@@ -29,8 +69,10 @@ export function Keyboard(props) {
                                     <div
                                         id={item}
                                         key={item}
-                                        className={styles.row_key}
-                                        onClick={() => logState()}
+                                        className={getInputProps(idx)}
+                                        onClick={(e) => {
+                                            clickAnimation(e);
+                                        }}
                                     >
                                         {item}
                                     </div>
@@ -45,9 +87,11 @@ export function Keyboard(props) {
                                     <div
                                         id={item}
                                         key={item}
-                                        className={styles.row_key}
+                                        className={getInputProps(
+                                            idx + first_row.length
+                                        )}
                                         onClick={(e) => {
-                                            click(e);
+                                            clickAnimation(e);
                                         }}
                                     >
                                         {item}
@@ -63,7 +107,14 @@ export function Keyboard(props) {
                                     <div
                                         id={item}
                                         key={item}
-                                        className={styles.row_key}
+                                        className={getInputProps(
+                                            idx +
+                                                first_row.length +
+                                                second_row.length
+                                        )}
+                                        onClick={(e) => {
+                                            clickAnimation(e);
+                                        }}
                                     >
                                         {item}
                                     </div>
@@ -72,11 +123,22 @@ export function Keyboard(props) {
                     </div>
                 </div>
                 <div className={styles.enter_clear}>
-                    <div className={styles.enter_key}></div>
-                    <div
-                        className={styles.enter_key}
-                        onClick={props.checkWord}
-                    ></div>
+                    <div className={styles.enter_key}>
+                        <Image
+                            src='/check.png'
+                            width='24px'
+                            height='16px'
+                            alt='Check Button'
+                        ></Image>
+                    </div>
+                    <div className={styles.enter_key}>
+                        <Image
+                            src='/clear.png'
+                            width='24px'
+                            height='16px'
+                            alt='Back Button'
+                        ></Image>
+                    </div>
                 </div>
             </div>
         </>
