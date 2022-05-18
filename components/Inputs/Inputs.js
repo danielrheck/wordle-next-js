@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { inputsState } from './recoil';
+import { makeInputActive } from './recoilFunctions';
 import styles from './Inputs.module.css';
 
 export default function Inputs() {
@@ -8,6 +9,10 @@ export default function Inputs() {
     function logState() {
         console.log(inputs);
     }
+
+    const handleClick = function (field) {
+        makeInputActive(field, setInputs, inputs);
+    };
 
     function getInputProps(row, field) {
         if (inputs) {

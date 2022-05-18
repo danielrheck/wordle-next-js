@@ -1,15 +1,35 @@
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { keyboardState } from './recoil';
+import { inputsState } from '../Inputs/recoil';
 import { makeKeyClicked, makeKeyNotClicked } from './recoilFunctions';
+import {
+    addKeyToInputState,
+    makeNextLineActive,
+    backspace,
+} from '../Inputs/recoilFunctions';
 import styles from './Keyboard.module.css';
 
-export default function Keyboard() {
+export default function Keyboard(props) {
     const first_row = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
     const second_row = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
     const third_row = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
 
     const [keyboard, setKeyboard] = useRecoilState(keyboardState);
+    const [input, setInput] = useRecoilState(inputsState);
+
+    const addKey = function (key) {
+        addKeyToInputState(key, setInput, input);
+    };
+
+    const nextLine = function () {
+        props.eval();
+        makeNextLineActive(setInput, input);
+    };
+
+    const handleBackspace = function () {
+        backspace(setInput, input);
+    };
 
     function getInputProps(key) {
         if (keyboard) {
@@ -60,6 +80,13 @@ export default function Keyboard() {
             <button className={styles.logState} onClick={() => logState()}>
                 log keyboard state
             </button>
+            <button
+                className={styles.logState}
+                onClick={() => addKeyToInputState('a', setInput, input)}
+            >
+                add input key
+            </button>
+
             <div className={styles.keyboard}>
                 <div className={styles.rows}>
                     <div className={styles.keyboard_row}>
@@ -72,6 +99,7 @@ export default function Keyboard() {
                                         className={getInputProps(idx)}
                                         onClick={(e) => {
                                             clickAnimation(e);
+                                            addKey(item);
                                         }}
                                     >
                                         {item}
@@ -92,6 +120,7 @@ export default function Keyboard() {
                                         )}
                                         onClick={(e) => {
                                             clickAnimation(e);
+                                            addKey(item);
                                         }}
                                     >
                                         {item}
@@ -114,6 +143,7 @@ export default function Keyboard() {
                                         )}
                                         onClick={(e) => {
                                             clickAnimation(e);
+                                            addKey(item);
                                         }}
                                     >
                                         {item}
@@ -123,7 +153,12 @@ export default function Keyboard() {
                     </div>
                 </div>
                 <div className={styles.enter_clear}>
-                    <div className={styles.enter_key}>
+                    <div
+                        className={styles.enter_key}
+                        onClick={() => {
+                            nextLine();
+                        }}
+                    >
                         <Image
                             src='/check.png'
                             width='24px'
@@ -131,7 +166,12 @@ export default function Keyboard() {
                             alt='Check Button'
                         ></Image>
                     </div>
-                    <div className={styles.enter_key}>
+                    <div
+                        className={styles.enter_key}
+                        onClick={() => {
+                            handleBackspace();
+                        }}
+                    >
                         <Image
                             src='/clear.png'
                             width='24px'
