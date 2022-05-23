@@ -22,11 +22,6 @@ export default function Keyboard(props) {
         addKeyToInputState(key, setInput, input);
     };
 
-    const nextLine = function () {
-        props.eval();
-        makeNextLineActive(setInput, input);
-    };
-
     const handleBackspace = function () {
         backspace(setInput, input);
     };
@@ -156,7 +151,7 @@ export default function Keyboard(props) {
                     <div
                         className={styles.enter_key}
                         onClick={() => {
-                            nextLine();
+                            props.eval();
                         }}
                     >
                         <Image

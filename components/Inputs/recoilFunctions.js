@@ -80,3 +80,70 @@ export const backspace = function (setState, state) {
         })
     );
 };
+
+export const makeFieldRightPlace = function (idx, setState, state) {
+    setState(
+        produce(state, (draft) => {
+            for (let i = 0; i < draft.length; i++) {
+                if (draft[i].active) {
+                    draft[i].input[idx].rightplace = true;
+                    if (state[6].evalIdx < 5) {
+                        draft[6].evalIdx = state[6].evalIdx + 1;
+                    } else if (state[6].evalIdx == 5) {
+                        draft[6].evalIdx = 0;
+                    }
+                    return;
+                }
+            }
+        })
+    );
+};
+
+export const makeFieldWrongPlace = function (idx, setState, state) {
+    setState(
+        produce(state, (draft) => {
+            for (let i = 0; i < draft.length; i++) {
+                if (draft[i].active) {
+                    draft[i].input[idx].wrongplace = true;
+                    if (state[6].evalIdx < 5) {
+                        draft[6].evalIdx = state[6].evalIdx + 1;
+                    } else if (state[6].evalIdx == 5) {
+                        draft[6].evalIdx = 0;
+                    }
+                    return;
+                }
+            }
+        })
+    );
+};
+
+export const makeFieldWrongLetter = function (idx, setState, state) {
+    setState(
+        produce(state, (draft) => {
+            for (let i = 0; i < draft.length; i++) {
+                if (draft[i].active) {
+                    draft[i].input[idx].wrongletter = true;
+                    if (state[6].evalIdx < 5) {
+                        draft[6].evalIdx = state[6].evalIdx + 1;
+                    } else if (state[6].evalIdx == 5) {
+                        draft[6].evalIdx = 0;
+                    }
+                    return;
+                }
+            }
+        })
+    );
+};
+
+export const incrementEvalIdx = function (setState, state) {
+    setState(
+        produce(state, (draft) => {
+            console.log(state[6]);
+            if (state[6].evalIdx < 5) {
+                draft[6].evalIdx = state[6].evalIdx + 1;
+            } else if (state[6].evalIdx == 5) {
+                draft[6].evalIdx = 0;
+            }
+        })
+    );
+};
