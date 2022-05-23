@@ -1,1 +1,1 @@
-console.log([false] == [false]);
+
