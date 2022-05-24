@@ -10,8 +10,14 @@ export default function Inputs() {
         console.log(inputs);
     }
 
-    const handleClick = function (field) {
-        makeInputActive(field, setInputs, inputs);
+    const handleClick = function (field, row) {
+        inputs.map((item, idx) => {
+            if (item.active) {
+                if (idx == row) {
+                    makeInputActive(field, setInputs, inputs);
+                }
+            }
+        });
     };
 
     function getInputProps(row, field) {
@@ -88,7 +94,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 0)}
                                     className={getInputProps(0, field)}
                                     key={field}
                                 >
@@ -104,7 +110,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 1)}
                                     className={getInputProps(1, field)}
                                     key={field}
                                 >
@@ -120,7 +126,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 2)}
                                     className={getInputProps(2, field)}
                                     key={field + 10}
                                 >
@@ -136,7 +142,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 3)}
                                     className={getInputProps(3, field)}
                                     key={field + 15}
                                 >
@@ -152,7 +158,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 4)}
                                     className={getInputProps(4, field)}
                                     key={field + 20}
                                 >
@@ -168,7 +174,7 @@ export default function Inputs() {
                         inputField.map((field) => {
                             return (
                                 <div
-                                    onClick={() => handleClick(field)}
+                                    onClick={() => handleClick(field, 5)}
                                     className={getInputProps(5, field)}
                                     key={field + 20}
                                 >

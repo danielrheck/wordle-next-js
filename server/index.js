@@ -6,11 +6,16 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const { newWord, lastWord } = require('../database/mongoose');
+
 app.prepare().then(() => {
     const server = express();
 
     server.get('/a', (req, res) => {
-        res.json({ success: true });
+        lastWord().then((result) => {
+            console.log(result[0].word);
+            res.json({ word: result[0].word });
+        });
     });
 
     server.all('*', (req, res) => {

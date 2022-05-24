@@ -43,6 +43,12 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .enter_clear {
@@ -69,8 +75,8 @@
     background-color: #9c927b;
 }
 
-.wrong_letter {
-    background-color: rgb(75, 68, 80);
+.wrongletter {
+    background-color: rgb(66, 60, 71);
     transition: background-color 0.5s;
 }
 

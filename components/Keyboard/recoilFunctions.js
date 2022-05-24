@@ -31,6 +31,7 @@ export const makeKeyRightPlace = function (key, setState, state) {
         produce(state, (draft) => {
             draft.map((item) => {
                 if (item.key == key) {
+                    item.wrongplace = false;
                     item.rightplace = true;
                 }
             });
@@ -57,6 +58,9 @@ export const makeKeyWrongPlace = function (key, setState, state) {
         produce(state, (draft) => {
             draft.map((item) => {
                 if (item.key == key) {
+                    if (item.rightplace) {
+                        return;
+                    }
                     item.wrongplace = true;
                 }
             });

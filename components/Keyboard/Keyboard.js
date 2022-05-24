@@ -19,7 +19,35 @@ export default function Keyboard(props) {
     const [input, setInput] = useRecoilState(inputsState);
 
     const addKey = function (key) {
-        addKeyToInputState(key, setInput, input);
+        let change = 0;
+        if (first_row.indexOf(key)) {
+            keyboard.map((item) => {
+                if (item.key == key) {
+                    if (item.wrongletter) {
+                        change = 1;
+                    }
+                }
+            });
+        } else if (second_row.indexOf(key)) {
+            keyboard.map((item) => {
+                if (item.key == key) {
+                    if (item.wrongletter) {
+                        change = 1;
+                    }
+                }
+            });
+        } else if (third_row.indexOf(key)) {
+            keyboard.map((item) => {
+                if (item.key == key) {
+                    if (item.wrongletter) {
+                        change = 1;
+                    }
+                }
+            });
+        }
+        if (change == 0) {
+            addKeyToInputState(key, setInput, input);
+        }
     };
 
     const handleBackspace = function () {
