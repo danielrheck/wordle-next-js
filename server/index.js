@@ -57,6 +57,28 @@ app.prepare().then(() => {
         });
     });
 
+    server.get('/api/valid_word/:word', (req, res) => {
+        let word = req.params.word;
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
+                'X-RapidAPI-Key': WORDS_API_KEY,
+            },
+        };
+
+        fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}`, options)
+            .then((response) => response.json())
+            .then((response) => {
+                if (response.success == false) {
+                    res.json({ valid: false });
+                } else {
+                    res.json({ valid: true });
+                }
+            })
+            .catch((err) => console.error(err));
+    });
+
     server.all('*', (req, res) => {
         return handle(req, res);
     });

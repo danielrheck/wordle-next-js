@@ -20,6 +20,7 @@ import {
 } from '../Keyboard/recoilFunctions';
 import Keyboard from '../Keyboard/Keyboard';
 import Inputs from '../Inputs/Inputs';
+import EndgameModal from '../EndgameModal/EndgameModal';
 import styles from './Game.module.css';
 
 const transitionTime = 315;
@@ -28,7 +29,9 @@ export default function Game() {
     const [inputs, setInput] = useRecoilState(inputsState);
     const [keyboard, setKeyboard] = useRecoilState(keyboardState);
     const [word, setWord] = useState('');
-    const [encryptionKey] = useState(WORD_ENCRYPTION_KEY);
+    const [isGuessCorrect, setIsGuessCorrect] = useState(false);
+    const [isGameFinished, setIsGameFinished] = useState(false);
+    const [isValidGuess, setIsValidGuess] = useState(true);
 
     const getWord = function () {
         fetch('http://localhost:3000/api/current_word').then((res) =>
@@ -71,19 +74,20 @@ export default function Game() {
 
     let rightArray = rightWord.split('');
 
-    const letterEval = function () {
-        let guess = [];
-        let activeLine = [];
-        for (let i = 0; i < inputs.length; i++) {
-            if (inputs[i].active) {
-                activeLine.push(i);
-                for (let u = 0; u < inputs[i].input.length; u++) {
-                    guess.push(inputs[i].input[u].value);
-                }
+    const checkLetter = function (guess) {
+        if (inputs[6].evalIdx == 4) {
+            if (guess.join('') == word) {
+                setTimeout(() => {
+                    setIsGuessCorrect(true);
+                    setIsGameFinished(true);
+                    console.log('ganhou');
+                }, transitionTime * 2);
+            } else if (inputs[5].active) {
+                setTimeout(() => {
+                    setIsGameFinished(true);
+                    console.log('perdeu');
+                }, transitionTime * 2);
             }
-        }
-        if (guess.join('').length < 5) {
-            return;
         }
         if (guess[inputs[6].evalIdx]) {
             if (guess[inputs[6].evalIdx] == rightArray[inputs[6].evalIdx]) {
@@ -105,6 +109,38 @@ export default function Game() {
         }
     };
 
+    const letterEval = function () {
+        let guess = [];
+        let activeLine = [];
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].active) {
+                activeLine.push(i);
+                for (let u = 0; u < inputs[i].input.length; u++) {
+                    guess.push(inputs[i].input[u].value);
+                }
+            }
+        }
+        if (guess.join('').length < 5) {
+            return;
+        } else if (guess.join('').length == 5) {
+            if (inputs[6].evalIdx == 0) {
+                fetch(`/api/valid_word/${guess.join('')}`)
+                    .then((resp) => resp.json())
+                    .then((data) => {
+                        if (!data.valid) {
+                            console.log('NOT VALID');
+                            setIsValidGuess(false);
+                        } else {
+                            console.log('VALID');
+                            checkLetter(guess);
+                        }
+                    });
+            } else {
+                checkLetter(guess);
+            }
+        }
+    };
+
     const idxReset = function () {
         if (inputs[6].evalIdx == 5) {
             incrementEvalIdx(setInput, inputs);
@@ -122,6 +158,14 @@ export default function Game() {
     }, []);
 
     useEffect(() => {
+        if (!isValidGuess) {
+            setTimeout(() => {
+                setIsValidGuess(true);
+            }, 2500);
+        }
+    }, [isValidGuess]);
+
+    useEffect(() => {
         if (inputs[6].evalIdx == 5) {
             nextLine();
             return;
@@ -137,6 +181,14 @@ export default function Game() {
 
     return (
         <>
+            {isGameFinished && (
+                <EndgameModal isGuessCorrect={isGuessCorrect}></EndgameModal>
+            )}
+            {!isValidGuess && (
+                <div className={styles.invalidGuess}>
+                    Please insert a valid word...
+                </div>
+            )}
             <Inputs></Inputs>
             <Keyboard eval={() => handleclick()}></Keyboard>
         </>

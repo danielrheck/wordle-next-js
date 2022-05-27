@@ -4,3 +4,10 @@
     background-color: black;
     cursor: pointer;
 }
+
+.invalidGuess {
+    color: red;
+    font-size: 22px;
+    position: absolute;
+    top: 3%;
+}
