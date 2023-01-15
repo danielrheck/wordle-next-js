@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-mongoose.connect('mongodb://localhost:27017/wordle');
+mongoose.connect('mongodb://127.0.0.1:27017/wordle');
 
 const wordSchema = new mongoose.Schema({
     word: String,
